@@ -17,6 +17,7 @@ RUN wget https://downloads.apache.org/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSI
     mv kafka_${SCALA_VERSION}-${KAFKA_VERSION} kafka
 
 COPY run.sh /usr/kafka/bin/run.sh
+RUN chmod +x /usr/kafka/bin/run.sh
 
 #configファイルをバックアップ
 RUN cp /usr/kafka/config/kraft/server.properties /usr/kafka/config/kraft/server.properties.org
