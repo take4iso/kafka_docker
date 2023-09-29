@@ -8,8 +8,13 @@ ENV SCALA_VERSION=2.13
 ENV KAFKA_CLUSTER_ID=KafkaClusterID12345678
 ENV NODE_ID=1
 
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache bash && \
+    apk add --no-cache openjdk17-jre && \
+    apk add --no-cache wget && \
+    apk add --no-cache sed
 
-RUN apk add --no-cache wget bash openjdk17-jre
 WORKDIR /usr
 RUN wget https://downloads.apache.org/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz && \
     tar -xzf kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz && \
