@@ -2,11 +2,11 @@ FROM alpine:latest
 EXPOSE 9092
 EXPOSE 9093
 
+# KAFKA_CLUSTER_ID はUUIDにする必要がある #KAFKA_CLUSTER_ID="$(bin/kafka-storage.sh random-uuid)"
+ARG KAFKA_CLUSTER_ID=KafkaClusterID00000000
+ARG NODE_ID=1
 ARG KAFKA_VERSION=3.5.1
 ARG SCALA_VERSION=2.13
-# KAFKA_CLUSTER_ID はUUIDにする必要がある #KAFKA_CLUSTER_ID="$(bin/kafka-storage.sh random-uuid)"
-#ARG KAFKA_CLUSTER_ID=KafkaClusterID12345678
-#ARG NODE_ID=1
 
 RUN apk update && \
     apk upgrade && \
@@ -21,10 +21,15 @@ RUN wget https://downloads.apache.org/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSI
     rm kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz && \
     mv kafka_${SCALA_VERSION}-${KAFKA_VERSION} kafka
 
-COPY run.sh /usr/kafka/bin/run.sh
-RUN chmod +x /usr/kafka/bin/run.sh
+#実行スクリプトを作成
+RUN echo "echo \"Starting Kafka\"" > /usr/kafka/bin/run.sh && \
+    echo "echo \"KAFKA_CLUSTER_ID=${KAFKA_CLUSTER_ID}\"" >> /usr/kafka/bin/run.sh && \
+    echo "cd /usr/kafka" >> /usr/kafka/bin/run.sh && \
+    echo "bin/kafka-storage.sh format -t ${KAFKA_CLUSTER_ID} -c /usr/kafka/config/kraft/server.properties" >> /usr/kafka/bin/run.sh && \
+    echo "bin/kafka-server-start.sh config/kraft/server.properties" >> /usr/kafka/bin/run.sh && \
+    chmod +x /usr/kafka/bin/run.sh
 #改行コードをLFに変換
-RUN sed -i -e 's/\r//' /usr/kafka/bin/run.sh
+#RUN sed -i -e 's/\r//' /usr/kafka/bin/run.sh
 
 #configファイルをバックアップ
 RUN cp /usr/kafka/config/kraft/server.properties /usr/kafka/config/kraft/server.properties.org

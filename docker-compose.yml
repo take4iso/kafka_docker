@@ -6,11 +6,13 @@ volumes:
 
 services:
   kafka:
-    environment:
-      - KAFKA_CLUSTER_ID=KafkaClusterID12345678
-      - NODE_ID=999
     container_name: kafka-server
     build:
+      args:
+        KAFKA_CLUSTER_ID: ${KAFKA_CLUSTER_ID}
+        NODE_ID: ${NODE_ID}
+        KAFKA_VERSION: ${KAFKA_VERSION}
+        SCALA_VERSION: ${SCALA_VERSION}
       dockerfile: Dockerfile
     volumes:
       - type: volume
