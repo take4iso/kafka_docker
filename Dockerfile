@@ -18,6 +18,8 @@ RUN wget https://downloads.apache.org/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSI
 
 COPY run.sh /usr/kafka/bin/run.sh
 RUN chmod +x /usr/kafka/bin/run.sh
+#改行コードをLFに変換
+RUN sed -i -e 's/\r//' /usr/kafka/bin/run.sh
 
 #configファイルをバックアップ
 RUN cp /usr/kafka/config/kraft/server.properties /usr/kafka/config/kraft/server.properties.org
