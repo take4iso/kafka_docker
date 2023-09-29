@@ -1,0 +1,22 @@
+version: "3"
+
+volumes:
+  kafka-logs:
+  kraft-combined-logs:
+
+services:
+  kafka:
+    container_name: kafka-server
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - type: volume
+        source: kafka-logs
+        target: /tmp/kafka-logs
+      - type: volume
+        source: kraft-combined-logs
+        target: /tmp/kraft-combined-logs
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    restart: unless-stopped
