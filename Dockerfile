@@ -6,7 +6,7 @@ ENV KAFKA_VERSION=3.5.1
 ENV SCALA_VERSION=2.13
 # KAFKA_CLUSTER_ID はUUIDにする必要がある #KAFKA_CLUSTER_ID="$(bin/kafka-storage.sh random-uuid)"
 ENV KAFKA_CLUSTER_ID=KafkaClusterID12345678
-ENV NODE_ID=99
+ENV NODE_ID=1
 
 
 RUN apk add --no-cache wget bash openjdk17-jre
