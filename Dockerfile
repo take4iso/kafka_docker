@@ -22,7 +22,8 @@ RUN wget https://downloads.apache.org/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSI
     mv kafka_${SCALA_VERSION}-${KAFKA_VERSION} kafka
 
 #実行スクリプトを作成
-RUN echo "echo \"Starting Kafka\"" > /usr/kafka/bin/run.sh && \
+RUN echo "#!/bin/bash" > /usr/kafka/bin/run.sh && \
+    echo "echo \"Starting Kafka\"" >> /usr/kafka/bin/run.sh && \
     echo "echo \"KAFKA_CLUSTER_ID=${KAFKA_CLUSTER_ID}\"" >> /usr/kafka/bin/run.sh && \
     echo "cd /usr/kafka" >> /usr/kafka/bin/run.sh && \
     echo "bin/kafka-storage.sh format -t ${KAFKA_CLUSTER_ID} -c /usr/kafka/config/kraft/server.properties" >> /usr/kafka/bin/run.sh && \

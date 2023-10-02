@@ -1,8 +1,8 @@
 version: "3"
 
 volumes:
-  kafka-logs:
-  kraft-combined-logs:
+  logs:
+  combined-logs:
 
 services:
   kafka:
@@ -16,10 +16,10 @@ services:
       dockerfile: Dockerfile
     volumes:
       - type: volume
-        source: kafka-logs
+        source: logs
         target: /tmp/kafka-logs
       - type: volume
-        source: kraft-combined-logs
+        source: combined-logs
         target: /tmp/kraft-combined-logs
     ports:
       - "9092:9092"
