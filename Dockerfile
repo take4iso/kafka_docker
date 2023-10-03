@@ -34,6 +34,8 @@ RUN echo "#!/bin/bash" > /usr/kafka/bin/run.sh && \
 
 #configファイルをバックアップ
 RUN cp /usr/kafka/config/kraft/server.properties /usr/kafka/config/kraft/server.properties.org
+#クラスターID, ノードID以外はファイルを編集しておく
+COPY server.properties /usr/kafka/config/kraft/server.properties
 
 #configファイルを書き換え　NODE_IDを指定
 RUN sed -i -e "s/^node.id=1/node.id=${NODE_ID}/g" /usr/kafka/config/kraft/server.properties && \
