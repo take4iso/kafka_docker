@@ -6,8 +6,8 @@
   - alpne:latest
   - OpenJDK17-jre
 - ボリュームの構成
-  - kafka_docker-logs: /tmp/kafka-logs
-  - kafka_docker-combined-logs: /tmp/kafka-combined-logs
+  - kafka_docker_logs: /tmp/kafka-logs
+  - kafka_docker_combined-logs: /tmp/kafka-combined-logs
 - Kafkaインストールフォルダ
   - /usr/kafka
 - ポート
