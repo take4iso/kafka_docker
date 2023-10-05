@@ -34,11 +34,8 @@ RUN echo "#!/bin/bash" > /usr/kafka/bin/run.sh && \
 
 #configファイルをバックアップ
 RUN cp /usr/kafka/config/kraft/server.properties /usr/kafka/config/kraft/server.properties.org
-#クラスターID, ノードID以外はファイルを編集しておく
-COPY server.properties /usr/kafka/config/kraft/server.properties
 
-#configファイルを書き換え　NODE_IDを指定
-RUN sed -i -e "s/^node.id=1/node.id=${NODE_ID}/g" /usr/kafka/config/kraft/server.properties && \
-    sed -i -e "s/^controller.quorum.voters=1@localhost:9093/controller.quorum.voters=${NODE_ID}@localhost:9093/g" /usr/kafka/config/kraft/server.properties
+#ノードＩＤ別にserver.propertiesを作成しておく　ファイル名はserver.${NODE_ID}.properties
+COPY config/server.${NODE_ID}.properties /usr/kafka/config/kraft/server.properties
 
 ENTRYPOINT ["/bin/sh", "-c", "/usr/kafka/bin/run.sh"]
